@@ -5,7 +5,7 @@ import click
 @click.command()
 @click.option("-i", "--ip", prompt="Input IP range", help="IP range to scan")
 def start(ip):
-    ip = ip.encode("utf-8") # Encode IP - scapy fails to scan unicode
+    ip = ip.encode("utf-8")  # Encode IP - scapy fails to scan unicode
     scan_result = scan(ip)
     print_result(scan_result)
 
