@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import scapy.all as scapy
 import click
 
@@ -7,8 +5,7 @@ import click
 @click.command()
 @click.option("-i", "--ip", prompt="Input IP range", help="IP range to scan")
 def start(ip):
-    # encode IP to string - scapy fails to scan unicode
-    ip = ip.encode("utf-8")
+    ip = ip.encode("utf-8") # Encode IP - scapy fails to scan unicode
     scan_result = scan(ip)
     print_result(scan_result)
 
@@ -20,8 +17,8 @@ def scan(ip):
     answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
 
     clients_list = []
-    for x in answered_list:
-        client_dict = {"ip": x[1].psrc, "mac": x[1].hwsrc}
+    for client in answered_list:
+        client_dict = {"ip": client[1].psrc, "mac": client[1].hwsrc}
         clients_list.append(client_dict)
     return clients_list
 
